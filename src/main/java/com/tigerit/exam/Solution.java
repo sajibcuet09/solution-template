@@ -20,23 +20,15 @@ public class Solution implements Runnable {
     String[] columnNameList = new String[15];
     String[] outPutColumn,firstTable,secondTable;
     Integer[][][] row = new Integer[15][105][105];
-    Integer[][] outPut = new Integer[210][210];
+    Integer[][] outPut = new Integer[205*205][210];
     Integer outPutLength=0,outPutColumnLength=0;
     @Override
     public void run() {
-        /*// your application entry point
-
-        // sample input process
-        String stringInput = readLine();
-
-        Integer integerInput = readLineAsInteger();
-
-        // sample output process
-        printLine(stringInput);
-        printLine(integerInput);*/
         int test,cas=1,q,firstTablePos,secondTablePos,firstColumnPos,secondColumnPos;
         test=readLineAsInteger();
         for(cas=1;cas<=test;cas++) {
+            tableName.clear();
+            columnName.clear();
             printLine("Test: " + cas);
             initializeTable();
             q = readLineAsInteger();
@@ -57,11 +49,14 @@ public class Solution implements Runnable {
                     printLine(columnNameList[firstTablePos] + " " + columnNameList[secondTablePos]);
                 } else {
                     String temp = "";
-                    for (int i = 2; i < outPutColumn.length; i += 3) {
-                        if (i != 2) {
+                    for (int i = 1; i < outPutColumn.length; i += 2) {
+                        while(outPutColumn[i]==null||"".equalsIgnoreCase(outPutColumn[i])){
+                            i++;
+                        }
+                        if (i != 1) {
                             temp += " ";
                         }
-                        temp += outPutColumn[i];
+                        temp += outPutColumn[i+1];
                     }
                     printLine(temp);
                 }
@@ -137,7 +132,10 @@ public class Solution implements Runnable {
                         }
                         outPutLength++;
                     }else{
-                        for(int k=1;k<outPutColumn.length;k+=3){
+                        for(int k=1;k<outPutColumn.length;k+=2){
+                            while(outPutColumn[k]==null||"".equalsIgnoreCase(outPutColumn[k])){
+                                k++;
+                            }
                             if(outPutColumn[k].equalsIgnoreCase(firstTable[2])){
                                 outPut[outPutLength][outPutColumnLength++]=row[firstTablePos][i][columnName.get(firstTable[1]+
                                         "."+outPutColumn[k+1])];
